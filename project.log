@@ -1,0 +1,18 @@
+What is the training set?
+Waht is the data set?
+
+Both answers in important_info.log.
+
+Moving in for the merge now.
+
+- 'train/X_train.txt': Training set.
+- 'train/y_train.txt': Training labels.
+- 'test/X_test.txt': Test set.
+- 'test/y_test.txt': Test labels.
+
+9:20
+Data appears to be in the format of space-seperated values
+
+
+train/y_train.txt has 7352 rows
+train/x_train.txt has 7352 rows 
