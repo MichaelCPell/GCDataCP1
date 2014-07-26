@@ -34,33 +34,53 @@ Starting with the readings vector.
 
 
 
-    #VERTICAL MERGES
-    setwd("")
-    data1 = read.table("~/Desktop/UCI HAR Dataset/test/X_test_50.txt")
-    data2 = read.table("~/Desktop/UCI HAR Dataset/train/X_train_100.txt")
+
+    #SUBJECTS
+      subjects1 = read.table("~/Desktop/UCI HAR Dataset/test/subject_test_50.txt")
+      subjects2 = read.table("~/Desktop/UCI HAR Dataset/train/subject_train_100.txt")
+
+      data_table_1 = rbind(subjects1, subjects2)
+
+      library(plyr)
+      data_table_1 = rename(data_table_1,c("V1"="subject_id"))
+
+    #ACTIVITIES
+
+      activities1 = read.table("~/Desktop/UCI HAR Dataset/test/y_test_50.txt")
+      activities2 = read.table("~/Desktop/UCI HAR Dataset/train/y_train_100.txt")
+      activities3 = rbind(activities1,activities2)
 
 
-    data4 = rowSums(data3)
-    data4$mean = rowMeans(data3)
-
-    subjects1 = read.table("~/Desktop/UCI HAR Dataset/test/subject_test_50.txt")
-    subjects2 = read.table("~/Desktop/UCI HAR Dataset/train/subject_train_100.txt")
-
-    data4 = cbind(data4, subjects3)
-
-    activities1 = read.table("~/Desktop/UCI HAR Dataset/test/y_test_50.txt")
-    activities2 = read.table("~/Desktop/UCI HAR Dataset/train/y_train_100.txt")
-    activities3 = rbind(activities1,activities2)
-
-    data4$stdev = data.frame(apply(data3,1,sd))
+      data_table_1 = cbind(data_table_1, activities3)
+      data_table_1 = rename(data_table_1,c("V1"="activity_id"))
 
 
-    data4$activity[data4$activity == 1] <- "WALKING"
-    data4$activity[data4$activity == 2] <- "WALKING_UPSTAIRS"
-    data4$activity[data4$activity == 3] <- "WALKING_DOWNSTAIRS"
-    data4$activity[data4$activity == 4] <- "SITTING"
-    data4$activity[data4$activity == 5] <- "STANDING"
-    data4$activity[data4$activity == 6] <- "LAYING"
+      data_table_1$activity_id[data_table_1$activity_id == 1] <- "WALKING"
+      data_table_1$activity_id[data_table_1$activity_id == 2] <- "WALKING_UPSTAIRS"
+      data_table_1$activity_id[data_table_1$activity_id == 3] <- "WALKING_DOWNSTAIRS"
+      data_table_1$activity_id[data_table_1$activity_id == 4] <- "SITTING"
+      data_table_1$activity_id[data_table_1$activity_id == 5] <- "STANDING"
+      data_table_1$activity_id[data_table_1$activity_id == 6] <- "LAYING"
+
+    #DATA
+      data1 = read.table("~/Desktop/UCI HAR Dataset/test/X_test_50.txt")
+      data2 = read.table("~/Desktop/UCI HAR Dataset/train/X_train_100.txt")
+      data3 = rbind(data1,data2)
+
+
+      data_table_1$mean = rowMeans(data3)
+      data_table_1$stdev = apply(data3,1,sd)
+
+
+
+    #RESHAPING DATA
+      library(reshape)
+      mdata <- melt(data_table_1, id=c("subject_id","activity_id"))
+
+
+      reshaped_Data <- cast(mdata, subject_id + activity_id~variable, mean)
+
+
 
 
 
