@@ -1,6 +1,6 @@
 ##run_analysis.R Explanation
 
-The script is broken into 4 main steps.  
+The script is broken into 3 main steps.  
 
 ### 1. Data Aggregation
 This step merges the train and test datasets.  There were 3 main dimensions of data to merge, and I describe them as first being merged "vertically", and then "horizontally" concatenated.
@@ -9,8 +9,7 @@ Vertical merge means that I used the rbind() function to put the train/test data
 
 After I had vertically rbind()'d two dimensions (subject and activity), I could then concatenate them  to make a data.frame with two columns.  
 
-### 2. Data Translation
-The remaining dimension was the column of vectors of measurements.  After combining test and train, I used statistical summarizations for mean and st dev to summarize the the values into two additional columns, mean and stdev.
+The more difficult step was selecting just the mean and stdev features from the feature set.  This was done by hand selecting keep(line 34) and rename(line 36) statements. It was then combined like the others.
 
 ### 3. Data Reshaping
 I believe there was something like 30 readings for each combination of subject_id and activity_id, for each variable, so the goal was to summarize each of those 30 readings into 1 using a mean().
