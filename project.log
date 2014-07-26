@@ -16,3 +16,57 @@ Data appears to be in the format of space-seperated values
 
 train/y_train.txt has 7352 rows
 train/x_train.txt has 7352 rows 
+
+each row has a bunch of values.  561 to be exact!
+Each row is an activity.
+
+10:54
+I know what I need to do.
+
+First I am going to start off by seeing if I can do everything that I need to do with just the first fifty rows of each file.
+
+I am going to start by merging "vertically" and then trying to merge horizontally.
+
+Starting with the readings vector.
+  two steps:
+    1.  merge 50 + 100
+    2.  statistical transform to stdev and mean
+
+
+
+    #VERTICAL MERGES
+    setwd("")
+    data1 = read.table("~/Desktop/UCI HAR Dataset/test/X_test_50.txt")
+    data2 = read.table("~/Desktop/UCI HAR Dataset/train/X_train_100.txt")
+
+
+    data4 = rowSums(data3)
+    data4$mean = rowMeans(data3)
+
+    subjects1 = read.table("~/Desktop/UCI HAR Dataset/test/subject_test_50.txt")
+    subjects2 = read.table("~/Desktop/UCI HAR Dataset/train/subject_train_100.txt")
+
+    data4 = cbind(data4, subjects3)
+
+    activities1 = read.table("~/Desktop/UCI HAR Dataset/test/y_test_50.txt")
+    activities2 = read.table("~/Desktop/UCI HAR Dataset/train/y_train_100.txt")
+    activities3 = rbind(activities1,activities2)
+
+    data4$stdev = data.frame(apply(data3,1,sd))
+
+
+    data4$activity[data4$activity == 1] <- "WALKING"
+    data4$activity[data4$activity == 2] <- "WALKING_UPSTAIRS"
+    data4$activity[data4$activity == 3] <- "WALKING_DOWNSTAIRS"
+    data4$activity[data4$activity == 4] <- "SITTING"
+    data4$activity[data4$activity == 5] <- "STANDING"
+    data4$activity[data4$activity == 6] <- "LAYING"
+
+
+
+
+
+
+
+
+
